@@ -19,17 +19,10 @@ if(isset($_FILES['uploadimage']))
   move_uploaded_file($tempname, "images/" . $GLOBALS['filename']);
 }
 
-$sql = "insert into blog_table (title, date_of_creation, paragraph, image_filename) values ('" . $blogTitle . "', '" . $blogDate . "','" . $blogPara . "','".$filename."');";
-
-if($conn->query($sql) === TRUE)
-{
-  echo "";
-}
-
-else
-{
-  echo "Error Saving Post";
-}
+$sql = "insert into blog_table (title, date_of_creation, paragraph, image_filename) values (?,?,?,?);";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ssss",$blogTitle,$blogDate,$blogPara, $filename);
+$stmt->execute();
 
 $conn->close();
 
