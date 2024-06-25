@@ -1,4 +1,4 @@
-# A Simple Blog App Using PHP And MySQL
+#### A Simple Blog App Using PHP And MySQL
 
 This simple blog application provides a user-friendly platform for bloggers to publish their posts online.
 
