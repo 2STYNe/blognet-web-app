@@ -33,7 +33,7 @@
 
       include ("connection.php");
 
-      $sql = "select id,title, date_of_creation, paragraph from blog_table;";
+      $sql = "select id,title, date_of_creation, paragraph,image_filename from blog_table;";
 
       $result = $conn->query($sql);
 

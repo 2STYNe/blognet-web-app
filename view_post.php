@@ -1,7 +1,7 @@
 <?php
 include ("connection.php");
 $id = $_GET['id'];
-$sql = "select id,title, date_of_creation, paragraph FROM blog_table WHERE id = ?";
+$sql = "select id,title, date_of_creation, paragraph, image_filename FROM blog_table WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i",$id);
 $stmt->execute();
@@ -10,7 +10,7 @@ $title= "";
 $paragraph = "";
 $filename = "";
 $date = "";
-$stmt->bind_result($tmp_id,$title, $date, $paragraph);
+$stmt->bind_result($tmp_id,$title, $date, $paragraph,$filename);
 $stmt->fetch();
 
 ?>
@@ -38,7 +38,7 @@ $stmt->fetch();
     <?php
           echo "<div class='view_post_container'>";
             echo "<span class='title'>" . $title . "</span><br>";
-    if (isset($blog["image_filename"])) {
+    if (isset($filename)) {
 
             echo "<img class='view_img' src='images/" . $filename . "'><br>"; 
           } else {

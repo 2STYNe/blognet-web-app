@@ -18,7 +18,11 @@
 			</a>
 		</div>
 		<div class="writing-section">
-			<form action="create_post.php" method="POST">
+			<form
+				action="create_post.php"
+				method="POST"
+				enctype="multipart/form-data"
+			>
 				<input
 					id="blogTitle"
 					name="blogtitle"
@@ -37,7 +41,7 @@
 				></textarea>
 				<label for="uploadimage">
 					<span>Upload Image: </span>
-					<input type="file" name="uploadimage" />
+					<input type="file" name="uploadimage" id="uploadimage" />
 				</label>
 				<label for="blogdate">
 					<span id="dateLabel">Date: </span>

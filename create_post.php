@@ -8,23 +8,36 @@ $blogDate = $_POST["blogdate"];
 
 $blogPara = $_POST["blogpara"];
 
-$filename = "NONE";
-
 if(isset($_FILES['uploadimage']))
 {
-  $GLOBALS['filename'] = $_FILES['uploadimage']['name'];
-  
+  $filename = $_FILES['uploadimage']['name'];
   $tempname = $_FILES['uploadimage']['tmp_name'];
+  $upload_path = "images/" . basename($filename);
 
-  move_uploaded_file($tempname, "images/" . $GLOBALS['filename']);
+  $upload_error = $_FILES['uploadimage']['error'];
+  if($upload_error !== UPLOAD_ERR_OK) {
+      die("Upload failed with error code $upload_error");
+  }
+  
+  if (move_uploaded_file($tempname, $upload_path)) {
+    $sql = "insert into blog_table (title, date_of_creation, paragraph, image_filename) values (?,?,?,?);";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss",$blogTitle,$blogDate,$blogPara, $filename);
+    $stmt->execute();
+    echo "Hello there";
+  
+    $conn->close();
+  }
+
+} else {
+  $sql = "insert into blog_table (title, date_of_creation, paragraph) values (?,?,?);";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sss",$blogTitle,$blogDate,$blogPara);
+  $stmt->execute();
+  $conn->close();
+  echo "Not working";
 }
 
-$sql = "insert into blog_table (title, date_of_creation, paragraph, image_filename) values (?,?,?,?);";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ssss",$blogTitle,$blogDate,$blogPara, $filename);
-$stmt->execute();
-
-$conn->close();
 
 ?>
 
